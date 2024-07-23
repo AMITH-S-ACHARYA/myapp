@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project List</title>
+</head>
+<body>
+    <h1>Project List</h1>
+    <ul>
+        {% for project in projects %}
+            <li>{{ project.topic }}</li>
+            <ul>
+                <li>Languages Used: {{ project.languages_used }}</li>
+                <li>Duration: {{ project.duration }} weeks</li>
+                <li>Student: {{ project.student.name }}</li>
+            </ul>
+        {% empty %}
+            <li>No projects available</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

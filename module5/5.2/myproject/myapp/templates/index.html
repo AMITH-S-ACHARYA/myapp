@@ -1,0 +1,48 @@
+<!-- course_search/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Search</title>
+</head>
+<body>
+    <h1>Welcome to Course Search</h1>
+    <form id="search_form">
+        <label for="student_name">Enter student name:</label>
+        <input type="text" id="student_name" name="student_name" placeholder="Student Name">
+        <button type="submit">Search Courses</button>
+    </form>
+    <div id="course_list"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search_form').submit(function(e){
+                e.preventDefault();
+                var studentName = $('#student_name').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/search-student-courses/',
+                    data: {
+                        'student_name': studentName
+                    },
+                    success: function(response){
+                        $('#course_list').html('');
+                        if (response.courses.length > 0){
+                            response.courses.forEach(function(course){
+                                $('#course_list').append('<p>' + course + '</p>');
+                            });
+                        } else {
+                            $('#course_list').append('<p>Student not found or not enrolled in any courses.</p>');
+                        }
+                    },
+                    error: function(xhr, errmsg, err){
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
